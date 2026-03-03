@@ -22,12 +22,12 @@ importance.sort_values(ascending=False).to_csv('feature_importance.csv', header=
 
 asked_questions = []
 user_responses = pd.Series(-1, index=X.columns)
-while df.shape[0] > 1 or (len(asked_questions) < 15): 
+while df.shape[0] > 1 or (len(asked_questions) < 20): 
     new_importance = retrain_on_subset(df, asked_questions)
     if new_importance is not None:
         importance = new_importance
 
-    current_quest = choose_question(importance, asked_questions)
+    current_quest = choose_question(importance, asked_questions,user_responses)
     
     if current_quest is None:
         break
@@ -42,7 +42,7 @@ while df.shape[0] > 1 or (len(asked_questions) < 15):
 
     X = df.drop('Character', axis=1)
     names = df['Character']
-
+    
 print(get_best_match(df_copy,user_responses))
 
 
